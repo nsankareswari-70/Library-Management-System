@@ -49,18 +49,6 @@ CREATE TABLE employees
 );
 
 
-DROP TABLE IF EXISTS books;
-CREATE TABLE books
-(
-            isbn VARCHAR(50) PRIMARY KEY,
-            book_title VARCHAR(80),
-            category VARCHAR(30),
-            rental_price DECIMAL(10,2),
-            status VARCHAR(15),
-            author VARCHAR(35),
-            publisher VARCHAR(55)
-);
-
 -- Create table "Members"
 DROP TABLE IF EXISTS members;
 CREATE TABLE members

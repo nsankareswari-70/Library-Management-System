@@ -118,7 +118,8 @@ Inserted sample records into the books table.
 Retrieved and displayed data from various tables.
 #### Update: 
 Updated records in the Mambers table.
-Delete: Removed records from the Issued Status Table
+#### Delete:
+Removed records from the Issued Status Table
 
 ### Questions
 #### Question 1:

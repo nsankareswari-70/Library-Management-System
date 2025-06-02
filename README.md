@@ -159,14 +159,14 @@ DELETE FROM issued_status
 WHERE issued_id = 'IS121';
 ```
 #### Question 4:
-Retrieve All Books Issued by a Specific Employee 
+Retrieve All Books Issued by a Specific Employee   
 Objective: Select all books issued by the employee with emp_id = 'E101'.
 ```sql
 SELECT * FROM issued_status
 WHERE issued_emp_id = 'E101';
 ```
 #### Question 5:
-List Members Who Have Issued More Than One Book
+List Members Who Have Issued More Than One Book  
  Objective: Use GROUP BY to find members who have issued more than one book.
  ```sql
  select issued_emp_id, count(*) as "Number of books issued" from issued_status

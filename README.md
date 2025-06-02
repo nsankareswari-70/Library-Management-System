@@ -280,3 +280,116 @@ VALUES
 select * from return_status;
 ```
 
+```sql
+--Questions
+--Question 1:
+--Create a New Book Record -- "978-1-60129-456-2', 'To Kill a Mockingbird', 'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.')"
+
+INSERT INTO books(isbn, book_title, category, rental_price, status, author, publisher)
+VALUES
+('978-1-60129-456-2', 'To Kill a Mockingbird', 'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.');
+SELECT * FROM books;
+
+--Question 2:
+--Update an Existing Member's Address
+UPDATE members
+SET member_address = '125 Main St'
+WHERE member_id = 'C101';
+SELECT * FROM members;
+
+-- Question 3: 
+--Delete a Record from the Issued Status Table 
+-- Objective: Delete the record with issued_id = 'IS121' from the issued_status table.
+
+select * from issued_status where issued_id='IS121';
+
+DELETE FROM issued_status
+WHERE issued_id = 'IS121';
+
+--Question 4:
+--Retrieve All Books Issued by a Specific Employee -- Objective: Select all books issued by the employee with emp_id = 'E101'.
+
+SELECT * FROM issued_status
+WHERE issued_emp_id = 'E101';
+
+--Question 5:
+--List Members Who Have Issued More Than One Book
+-- Objective: Use GROUP BY to find members who have issued more than one book.
+ select issued_emp_id, count(*) as "Number of books issued" from issued_status
+ group by issued_emp_id having count(*)>1 order by issued_emp_id ;
+ 
+ --Question 6:
+ --Create Summary Tables: Used CTAS to generate new tables based on query results - each book and total times issued
+ 
+create table issue_count as
+select b.isbn,book_title,count(*)as total_issued from books b
+join issued_status iss on
+b.isbn = iss.issued_book_isbn
+group by b.isbn,book_title;
+
+select * from issue_count;
+
+--Question 7:
+-- Retrieve All Books in a Specific Category:
+
+SELECT * FROM books
+WHERE category = 'Classic';
+
+--Question 8:
+--Find Total Rental Income by Category:
+
+
+SELECT
+    b.category,
+    SUM(b.rental_price),
+    COUNT (*) as Bookcount
+FROM books as b
+JOIN
+issued_status as ist
+ON ist.issued_book_isbn = b.isbn
+GROUP BY 1
+
+--Question 9
+-- List Members Who Registered in the Last 180 Days:
+
+SELECT * FROM members
+WHERE reg_date >= CURRENT_DATE - INTERVAL '180 days'  ; 
+
+
+--Question 10
+--  List Employees with Their Branch Manager's Name and their branch details:
+
+SELECT 
+    e1.*,
+    b.manager_id,
+    e2.emp_name as manager
+FROM employees as e1
+JOIN  
+branch as b
+ON b.branch_id = e1.branch_id
+JOIN
+employees as e2
+ON b.manager_id = e2.emp_id
+
+
+-- Question 11. 
+--Create a Table of Books with Rental Price Above a Certain Threshold 7USD
+
+CREATE TABLE books_price_greater_than_seven
+AS    
+SELECT * FROM Books
+WHERE rental_price > 7
+
+select * from books_price_greater_than_seven;
+
+--Question 12: Retrieve the List of Books Not Yet Returned
+
+SELECT 
+    DISTINCT ist.issued_book_name
+FROM issued_status as ist
+LEFT JOIN
+return_status as rs
+ON ist.issued_id = rs.issued_id
+WHERE rs.return_id IS NULL
+
+```

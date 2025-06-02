@@ -117,7 +117,7 @@ Inserted sample records into the books table.
 #### Read: 
 Retrieved and displayed data from various tables.
 #### Update: 
-Updated records in the Mambers table.
+Updated records in the Members table.
 #### Delete:
 Removed records from the Issued Status Table  
 

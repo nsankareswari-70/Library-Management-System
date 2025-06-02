@@ -150,7 +150,7 @@ WHERE member_id = 'C101';
 SELECT * FROM members;
 ```
 ####  Question 3: 
-Delete a Record from the Issued Status Table 
+Delete a Record from the Issued Status Table  
 Objective: Delete the record with issued_id = 'IS121' from the issued_status table.
 ```sql
 select * from issued_status where issued_id='IS121';

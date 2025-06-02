@@ -24,7 +24,7 @@ Created a database named Library-sql-project
 #### Table Creation : 
 Created tables for branches, employees, members, books, issued status, and return status. Each table includes relevant columns and relationships.
 
-``sql
+```sql
 -- creating branch table
 
 DROP TABLE IF EXISTS branch;
@@ -122,4 +122,4 @@ alter table return_status
 add constraint fk_issued_status
 foreign key(issued_id)
 references issued_status(issued_id);
-``
+```

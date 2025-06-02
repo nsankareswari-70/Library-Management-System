@@ -133,47 +133,47 @@ Updated records in the Mambers table.
 Delete: Removed records from the Issued Status Table
 
 ### Questions
+#### Question 1:
+Create a New Book Record -- "978-1-60129-456-2', 'To Kill a Mockingbird', 'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.')"
 ```sql
-
---Question 1:
---Create a New Book Record -- "978-1-60129-456-2', 'To Kill a Mockingbird', 'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.')"
-
 INSERT INTO books(isbn, book_title, category, rental_price, status, author, publisher)
 VALUES
 ('978-1-60129-456-2', 'To Kill a Mockingbird', 'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.');
 SELECT * FROM books;
-
---Question 2:
---Update an Existing Member's Address
+```
+#### Question 2:
+Update an Existing Member's Address
+```
 UPDATE members
 SET member_address = '125 Main St'
 WHERE member_id = 'C101';
 SELECT * FROM members;
-
--- Question 3: 
---Delete a Record from the Issued Status Table 
--- Objective: Delete the record with issued_id = 'IS121' from the issued_status table.
-
+```
+####  Question 3: 
+Delete a Record from the Issued Status Table 
+Objective: Delete the record with issued_id = 'IS121' from the issued_status table.
+```sql
 select * from issued_status where issued_id='IS121';
 
 DELETE FROM issued_status
 WHERE issued_id = 'IS121';
-
---Question 4:
---Retrieve All Books Issued by a Specific Employee -- Objective: Select all books issued by the employee with emp_id = 'E101'.
-
+```
+#### Question 4:
+Retrieve All Books Issued by a Specific Employee -- Objective: Select all books issued by the employee with emp_id = 'E101'.
+```sql
 SELECT * FROM issued_status
 WHERE issued_emp_id = 'E101';
-
---Question 5:
---List Members Who Have Issued More Than One Book
--- Objective: Use GROUP BY to find members who have issued more than one book.
+```
+#### Question 5:
+List Members Who Have Issued More Than One Book
+ Objective: Use GROUP BY to find members who have issued more than one book.
+ ```sql
  select issued_emp_id, count(*) as "Number of books issued" from issued_status
  group by issued_emp_id having count(*)>1 order by issued_emp_id ;
- 
- --Question 6:
- --Create Summary Tables: Used CTAS to generate new tables based on query results - each book and total times issued
- 
+ ```
+ #### Question 6:
+ Create Summary Tables: Used CTAS to generate new tables based on query results - each book and total times issued
+ ```sql
 create table issue_count as
 select b.isbn,book_title,count(*)as total_issued from books b
 join issued_status iss on
@@ -181,17 +181,18 @@ b.isbn = iss.issued_book_isbn
 group by b.isbn,book_title;
 
 select * from issue_count;
+```
 
---Question 7:
--- Retrieve All Books in a Specific Category:
-
+#### Question 7:
+ Retrieve All Books in a Specific Category:
+```sql
 SELECT * FROM books
 WHERE category = 'Classic';
+```
+#### Question 8:
+Find Total Rental Income by Category:
 
---Question 8:
---Find Total Rental Income by Category:
-
-
+```sql
 SELECT
     b.category,
     SUM(b.rental_price),
@@ -201,17 +202,17 @@ JOIN
 issued_status as ist
 ON ist.issued_book_isbn = b.isbn
 GROUP BY 1
-
---Question 9
--- List Members Who Registered in the Last 180 Days:
-
+```
+#### Question 9
+ List Members Who Registered in the Last 180 Days:
+```sql
 SELECT * FROM members
 WHERE reg_date >= CURRENT_DATE - INTERVAL '180 days'  ; 
+```
 
-
---Question 10
---  List Employees with Their Branch Manager's Name and their branch details:
-
+#### Question 10
+  List Employees with Their Branch Manager's Name and their branch details:
+```sql
 SELECT 
     e1.*,
     b.manager_id,
@@ -224,19 +225,19 @@ JOIN
 employees as e2
 ON b.manager_id = e2.emp_id
 
-
--- Question 11. 
---Create a Table of Books with Rental Price Above a Certain Threshold 7USD
-
+```
+### Question 11. 
+Create a Table of Books with Rental Price Above a Certain Threshold 7USD
+```sql
 CREATE TABLE books_price_greater_than_seven
 AS    
 SELECT * FROM Books
 WHERE rental_price > 7
 
 select * from books_price_greater_than_seven;
-
---Question 12: Retrieve the List of Books Not Yet Returned
-
+```
+#### Question 12: Retrieve the List of Books Not Yet Returned
+```sql
 SELECT 
     DISTINCT ist.issued_book_name
 FROM issued_status as ist
